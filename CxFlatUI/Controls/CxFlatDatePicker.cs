@@ -236,7 +236,7 @@ namespace CxFlatUI.Controls
             graphics.DrawPath(new Pen(ThemeColors.OneLevelBorder), bg);
 
             //绘制年月
-            graphics.DrawString(string.Format("{0}年{1,2}月",CurrentDate.Year,CurrentDate.Month), new Font("微软雅黑",12f), new SolidBrush(ThemeColors.MainText), TopDateRect, StringAlign.Center);
+            graphics.DrawString(DateTime.Now.ToString("MMM yyyy"), new Font("微软雅黑",12f), new SolidBrush(ThemeColors.MainText), TopDateRect, StringAlign.Center);
             //绘制年月选择区域
             graphics.DrawString("7", new Font("webdings", 12f), new SolidBrush(previousYearHovered ? ThemeColors.PrimaryColor : ThemeColors.PlaceholderText), PreviousYearRect, StringAlign.Center);
             graphics.DrawString("3", new Font("webdings", 12f), new SolidBrush(previousMonthHovered ? ThemeColors.PrimaryColor : ThemeColors.PlaceholderText), PreviousMonthRect, StringAlign.Center);
@@ -244,10 +244,10 @@ namespace CxFlatUI.Controls
             graphics.DrawString("8", new Font("webdings", 12f), new SolidBrush(nextYearHovered ? ThemeColors.PrimaryColor : ThemeColors.PlaceholderText), NextYearRect, StringAlign.Center);
 
             //绘制星期
-            string s = "一二三四五六日";
-            for (int i = 0; i < 7; i++)
+            var s = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedDayNames.ToList();
+            for (int i = 0; i < s.Count; i++)
             {
-                graphics.DrawString(s[i].ToString(), new Font("微软雅黑", 10f), new SolidBrush(ThemeColors.RegularText), new RectangleF(10+i * (Width-20) / 7, WeekRect.Y, WeekRect.Width, WeekRect.Height), StringAlign.Center);
+                graphics.DrawString(s[i].Substring(0, Math.Min(2, s[i].Length)), new Font("微软雅黑", 10f), new SolidBrush(ThemeColors.RegularText), new RectangleF(10+i * (Width-20) / 7, WeekRect.Y, WeekRect.Width, WeekRect.Height), StringAlign.Center);
             }
 
             //绘制分割线
